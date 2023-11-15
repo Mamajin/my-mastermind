@@ -14,6 +14,24 @@ class Board:
         self.y = y
         self.answer = self.__get_answer()
 
+    # create getters and setter
+
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, x):
+        self._x = x
+
+    @property
+    def y(self):
+        return self._y
+
+    @y.setter
+    def y(self, y):
+        self._y = y
+
     def __get_answer(self):
         """Create the randomized pattern/answer"""
         answer_ls = []
@@ -25,6 +43,8 @@ class Board:
     def get_guess():
         """
         get user guess and return as a list
+        staticmethod is put above to say that this method does not require
+        attribute in the class
         :return:
         """
         guess = input("What is your guess?: ")
@@ -39,13 +59,20 @@ class Board:
         # Your guess is 1331
         # o*
         # debug the code above printing only the one with higher truth value
-        hint = ""
+        _hint = ""
+        right_pos = 0
+        right_num = 0
         for i in range(len(self.answer)):
             if player_guess[i] == self.answer[i]:
-                hint += "*"
+                right_pos += 1
             elif player_guess[i] in self.answer:
-                hint += "o"
-        return hint
+                right_num += 1
+        # create the hint
+        for i in range(right_pos):
+            _hint += "*"
+        for i in range(right_num):
+            _hint += "o"
+        return _hint
 
     def comp_ans_to_guess(self, player_guess):
         if self.answer == player_guess:
